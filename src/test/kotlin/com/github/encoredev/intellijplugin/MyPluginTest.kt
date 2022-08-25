@@ -1,4 +1,4 @@
-package com.github.domblack.intellijplugin
+package com.github.encoredev.intellijplugin
 
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.psi.xml.XmlFile

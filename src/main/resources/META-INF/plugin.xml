@@ -1,18 +1,34 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.domblack.intellijplugin</id>
-    <name>intellij-plugin</name>
-    <vendor>domblack</vendor>
+    <id>dev.encore.intellij</id>
+    <name>Encore</name>
+    <version>1.0.0</version>
+    <vendor url="https://encore.dev" email="support@encore.dev">Encoretivity AB</vendor>
+    <description>
+    <![CDATA[
+        Provides support for the <a href="https://encore.dev">Encore Backend Engine</a>.
+
+        <p>
+        This plugin allows you to run unit tests directly from within GoLand with full support
+        for all of Encore's features.
+        </p>
+    ]]>
+    </description>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.go</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.domblack.intellijplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.domblack.intellijplugin.services.MyProjectService"/>
+        <fileType
+                name="Encore App Manifest"
+                implementationClass="dev.encore.intellij.appfile.EncoreAppFileType"
+                fieldName="INSTANCE"
+                language="JSON5"
+                fileNamesCaseInsensitive="encore.app"
+            />
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.domblack.intellijplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <extensions defaultExtensionNs="com.goide">
+        <runConfigurationExtension implementation="dev.encore.intellij.runconfig.EncoreRunConfig" order="first" />
+    </extensions>
 </idea-plugin>
