@@ -19,6 +19,10 @@
     <depends>org.jetbrains.plugins.go</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <defaultLiveTemplates file="/liveTemplates/Encore.xml"/>
+        <liveTemplateContext
+                implementation="dev.encore.intellij.liveTemplates.EncoreContext"/>
+
         <fileType
                 name="Encore App Manifest"
                 implementationClass="dev.encore.intellij.appfile.EncoreAppFileType"

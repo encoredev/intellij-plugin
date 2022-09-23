@@ -12,6 +12,9 @@ support for the Encore Backend Engine.
 
 This plugin allows you to run unit tests directly from within GoLand with support
 for debug mode and breakpoints.
+
+It also adds a `newapi` live template, within a Go file type `newapi` to get easy autocompletion for
+a new API
 <!-- Plugin description end -->
 
 ## Installation
