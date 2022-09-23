@@ -3,7 +3,7 @@
     <id>dev.encore.intellij</id>
     <name>Encore</name>
     <version>1.0.0</version>
-    <vendor url="https://encore.dev" email="support@encore.dev">Encoretivity AB</vendor>
+    <vendor url="https://encore.dev" email="support@encore.dev">Encore</vendor>
     <description>
     <![CDATA[
         Provides support for the <a href="https://encore.dev">Encore Backend Engine</a>.

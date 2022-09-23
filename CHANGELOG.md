@@ -1,7 +1,8 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# intellij-plugin Changelog
+# Encore IntelliJ Plugin Changelog
 
 ## [Unreleased]
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Added support for running unit tests of Encore applications in GoLand 
+- Add syntax highlighting and icon for `encore.app` files
