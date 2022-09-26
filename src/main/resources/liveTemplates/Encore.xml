@@ -1,5 +1,5 @@
 <templateSet group="Encore">
-  <template name="newapi" value="type $ApiName$Params struct {}&#10;&#10;type $ApiName$Response struct {}&#10;&#10;//encore:api $ApiVisibility$&#10;func $ApiName$(ctx context.Context, req *$ApiName$Params) (*$ApiName$Response, error) {&#10;    return nil, nil&#10;}" shortcut="SPACE" description="Creates an Encore Api definition and types" toReformat="true" toShortenFQNames="true">
+  <template name="newapi" value="type $ApiName$Params struct {}&#10;&#10;type $ApiName$Response struct {}&#10;&#10;//encore:api $ApiVisibility$&#10;func $ApiName$(ctx context.Context, p *$ApiName$Params) (*$ApiName$Response, error) {&#10;    return nil, nil&#10;}" shortcut="SPACE" description="Creates an Encore API definition and types" toReformat="true" toShortenFQNames="true">
     <variable name="ApiName" expression="" defaultValue="capitalize(fileNameWithoutExtension())" alwaysStopAt="true" />
     <variable name="ApiVisibility" expression="enum(&quot;public&quot;, &quot;private&quot;, &quot;auth&quot;, &quot;raw&quot;)" defaultValue="public" alwaysStopAt="true" />
     <context>
