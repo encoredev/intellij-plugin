@@ -3,6 +3,8 @@
 # Encore IntelliJ Plugin Changelog
 
 ## [Unreleased]
+### Bugs
+- Changed the `newapi` live template to fix a typo and renamed the parameters prop to `p`
 
 ## [0.0.2]
 ### Added
