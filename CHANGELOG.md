@@ -3,6 +3,8 @@
 # Encore IntelliJ Plugin Changelog
 
 ## [Unreleased]
+
+## [0.0.3]
 ### Bugs
 - Fix support for directory tests (previously only file and function level tests worked).
 - Changed the `newapi` live template to fix a typo and renamed the parameters prop to `p`
