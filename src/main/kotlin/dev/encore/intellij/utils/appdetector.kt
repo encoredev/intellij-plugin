@@ -2,6 +2,7 @@ package dev.encore.intellij.utils
 
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.project.guessProjectDir
 import com.intellij.openapi.project.modules
 import com.intellij.openapi.project.rootManager
 import com.intellij.psi.PsiDirectory
@@ -45,10 +46,10 @@ fun isInEncoreApp(project: Project): Boolean {
         return false
     }
 
-    for (module in project.modules) {
-        if (isInEncoreApp(module)) {
-            return true
-        }
+    val projectDir = project.guessProjectDir() ?: return false
+    val appFile = projectDir.findChild(EncoreAppFile)
+    if (appFile != null && appFile.exists()) {
+        return true
     }
     return false
 }
