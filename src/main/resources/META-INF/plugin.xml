@@ -37,6 +37,15 @@
             />
 
         <requiredForSmartModeStartupActivity implementation="dev.encore.intellij.StartupActivity" />
+
+        <applicationService serviceImplementation="dev.encore.intellij.settings.SettingsState" />
+
+        <applicationConfigurable
+                parentId="tools"
+                instance="dev.encore.intellij.settings.Settings"
+                id="dev.encore.intellij.settings.Settings"
+                displayName="Encore"/>
+        />
     </extensions>
 
     <extensions defaultExtensionNs="com.goide">

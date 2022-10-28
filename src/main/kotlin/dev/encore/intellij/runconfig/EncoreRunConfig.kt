@@ -8,6 +8,7 @@ import com.goide.execution.testing.GoTestRunConfiguration
 import com.intellij.execution.configurations.RunnerSettings
 import com.intellij.execution.target.TargetedCommandLineBuilder
 import com.intellij.execution.target.value.TargetValue
+import dev.encore.intellij.settings.settingsState
 import dev.encore.intellij.utils.isInEncoreApp
 
 class EncoreRunConfig : GoRunConfigurationExtension() {
@@ -50,7 +51,7 @@ class EncoreRunConfig : GoRunConfigurationExtension() {
             }
         }
         if (useEncoreBinary) {
-            cmdLine.exePath = TargetValue.fixed("/Users/dom/bin/encoretmp/build_encoretmp")
+            cmdLine.exePath = TargetValue.fixed(settingsState().encoreBinary)
         }
         super.patchCommandLine(configuration, runnerSettings, cmdLine, runnerId, state, commandLineType)
     }

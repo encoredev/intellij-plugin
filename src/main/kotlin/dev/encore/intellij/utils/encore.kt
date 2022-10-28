@@ -5,6 +5,7 @@ import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.process.ScriptRunnerUtil
 import com.intellij.openapi.project.Project
 import dev.encore.intellij.Encore
+import dev.encore.intellij.settings.settingsState
 
 
 /**
@@ -18,7 +19,7 @@ import dev.encore.intellij.Encore
 fun runEncoreCommand(project: Project, vararg argsToEncore: String): String? {
     val cmdLine = GeneralCommandLine()
     cmdLine.setWorkDirectory(project.basePath)
-    cmdLine.exePath = "encore"
+    cmdLine.exePath = settingsState().encoreBinary
     cmdLine.addParameters(argsToEncore.toMutableList())
 
     return try {

@@ -5,10 +5,15 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.modules
 import com.intellij.openapi.project.rootManager
 import com.intellij.psi.PsiDirectory
+import dev.encore.intellij.settings.settingsState
 
 const val EncoreAppFile = "encore.app"
 
 fun isInEncoreApp(dir: PsiDirectory?): Boolean {
+    if (!settingsState().enabled) {
+        return false
+    }
+
     if (dir == null) {
         return false
     }
@@ -22,6 +27,10 @@ fun isInEncoreApp(dir: PsiDirectory?): Boolean {
 }
 
 fun isInEncoreApp(module: Module): Boolean {
+    if (!settingsState().enabled) {
+        return false
+    }
+
     for (folder in module.rootManager.contentRoots) {
         val appFile = folder.findChild(EncoreAppFile)
         if (appFile != null && appFile.exists()) {
@@ -32,6 +41,10 @@ fun isInEncoreApp(module: Module): Boolean {
 }
 
 fun isInEncoreApp(project: Project): Boolean {
+    if (!settingsState().enabled) {
+        return false
+    }
+
     for (module in project.modules) {
         if (isInEncoreApp(module)) {
             return true

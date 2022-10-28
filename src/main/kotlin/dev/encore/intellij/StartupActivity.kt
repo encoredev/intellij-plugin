@@ -28,7 +28,7 @@ class StartupActivity : StartupActivity.Background, StartupActivity.RequiredForS
         Encore.encoreInstalled = true
 
         // Get the version
-        val versionString = versionOutput.trim().removePrefix("encore version ")
+        val versionString = versionOutput.trim().lines()[0].removePrefix("encore version ")
         if (versionString.startsWith("v")) {
             Encore.encoreVersion = SemVer.parseFromText(versionString.removePrefix("v"))
         } else {
