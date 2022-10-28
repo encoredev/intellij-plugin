@@ -8,12 +8,13 @@ import com.goide.execution.testing.GoTestRunConfiguration
 import com.intellij.execution.configurations.RunnerSettings
 import com.intellij.execution.target.TargetedCommandLineBuilder
 import com.intellij.execution.target.value.TargetValue
-import com.intellij.openapi.project.rootManager
+import dev.encore.intellij.settings.settingsState
+import dev.encore.intellij.utils.isInEncoreApp
 
 class EncoreRunConfig : GoRunConfigurationExtension() {
     override fun isApplicableFor(configuration: GoRunConfigurationBase<*>): Boolean {
         if (configuration is GoTestRunConfiguration) {
-            return isEncoreApp(configuration)
+            return isInEncoreApp(configuration.defaultModule)
         }
         return false
     }
@@ -23,7 +24,7 @@ class EncoreRunConfig : GoRunConfigurationExtension() {
         runnerSettings: RunnerSettings?
     ): Boolean {
         if (applicableConfiguration is GoTestRunConfiguration) {
-            return isEncoreApp(applicableConfiguration)
+            return isInEncoreApp(applicableConfiguration.defaultModule)
         }
         return false
     }
@@ -50,18 +51,8 @@ class EncoreRunConfig : GoRunConfigurationExtension() {
             }
         }
         if (useEncoreBinary) {
-            cmdLine.exePath = TargetValue.fixed("encore")
+            cmdLine.exePath = TargetValue.fixed(settingsState().encoreBinary)
         }
         super.patchCommandLine(configuration, runnerSettings, cmdLine, runnerId, state, commandLineType)
-    }
-
-    private fun isEncoreApp(configuration: GoRunConfigurationBase<*>): Boolean {
-        for (folder in configuration.getDefaultModule().rootManager.contentRoots) {
-            val appFile = folder.findChild("encore.app")
-            if (appFile != null && appFile.exists()) {
-                return true
-            }
-        }
-        return false
     }
 }
