@@ -3,6 +3,9 @@
 # Encore IntelliJ Plugin Changelog
 
 ## [Unreleased]
+### Added
+- From Encore v1.9.3 services databases can be automatically detected and configured within the IDE.
+  This will add both the local database used by `encore run` and the test database used by `encore test`
 
 ## [0.0.3]
 ### Bugs

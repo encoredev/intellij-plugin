@@ -17,6 +17,11 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.go</depends>
+    <depends>com.intellij.database</depends>
+
+    <extensions defaultExtensionNs="com.intellij.database">
+        <dataSourceDetector implementation="dev.encore.intellij.sqldb.Detector" />
+    </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
         <defaultLiveTemplates file="/liveTemplates/Encore.xml"/>
@@ -30,6 +35,8 @@
                 language="JSON5"
                 fileNamesCaseInsensitive="encore.app"
             />
+
+        <requiredForSmartModeStartupActivity implementation="dev.encore.intellij.StartupActivity" />
     </extensions>
 
     <extensions defaultExtensionNs="com.goide">
