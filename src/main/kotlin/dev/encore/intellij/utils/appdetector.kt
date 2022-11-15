@@ -1,9 +1,9 @@
 package dev.encore.intellij.utils
 
-import com.intellij.openapi.module.Module
+import com.intellij.database.util.containsElements
+import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.guessProjectDir
-import com.intellij.openapi.project.modules
 import com.intellij.openapi.project.rootManager
 import com.intellij.psi.PsiDirectory
 import dev.encore.intellij.settings.settingsState
@@ -27,29 +27,22 @@ fun isInEncoreApp(dir: PsiDirectory?): Boolean {
     return isInEncoreApp(dir.parentDirectory)
 }
 
-fun isInEncoreApp(module: Module): Boolean {
-    if (!settingsState().enabled) {
-        return false
-    }
-
-    for (folder in module.rootManager.contentRoots) {
-        val appFile = folder.findChild(EncoreAppFile)
-        if (appFile != null && appFile.exists()) {
-            return true
-        }
-    }
-    return false
-}
-
 fun isInEncoreApp(project: Project): Boolean {
     if (!settingsState().enabled) {
         return false
     }
 
+    // Check if the projects root directory has an encore.app file
     val projectDir = project.guessProjectDir() ?: return false
     val appFile = projectDir.findChild(EncoreAppFile)
     if (appFile != null && appFile.exists()) {
         return true
     }
-    return false
+
+    // Then check the projects modules
+    return ModuleManager.getInstance(project).modules.containsElements { module ->
+        module.rootManager.contentRoots.containsElements { folder ->
+            folder.findChild(EncoreAppFile)?.exists() == true
+        }
+    }
 }

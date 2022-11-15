@@ -14,7 +14,7 @@ import dev.encore.intellij.utils.isInEncoreApp
 class EncoreRunConfig : GoRunConfigurationExtension() {
     override fun isApplicableFor(configuration: GoRunConfigurationBase<*>): Boolean {
         if (configuration is GoTestRunConfiguration) {
-            return isInEncoreApp(configuration.defaultModule)
+            return isInEncoreApp(configuration.project)
         }
         return false
     }
@@ -24,7 +24,7 @@ class EncoreRunConfig : GoRunConfigurationExtension() {
         runnerSettings: RunnerSettings?
     ): Boolean {
         if (applicableConfiguration is GoTestRunConfiguration) {
-            return isInEncoreApp(applicableConfiguration.defaultModule)
+            return isInEncoreApp(applicableConfiguration.project)
         }
         return false
     }

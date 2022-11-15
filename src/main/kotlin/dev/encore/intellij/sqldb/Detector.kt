@@ -2,7 +2,7 @@ package dev.encore.intellij.sqldb
 
 import com.intellij.database.Dbms
 import com.intellij.database.autoconfig.DataSourceDetector
-import com.intellij.database.dataSource.*
+import com.intellij.database.dataSource.localDataSource
 import com.intellij.database.model.DasDataSource
 import com.intellij.database.model.ObjectKind
 import com.intellij.database.model.ObjectName
@@ -22,12 +22,15 @@ import java.net.URI
 
 class Detector : DataSourceDetector() {
     override fun collectDataSources(module: Module, builder: Builder, onTheFly: Boolean) {
-        if (Encore.encoreInstalled && !isInEncoreApp(module)) {
+        if (Encore.encoreInstalled && !isInEncoreApp(module.project)) {
             return
         }
 
         // Get connection URI from encore and extract the app name
         val uri = module.project.getUserData(DatabaseConnection) ?: return
+        if (uri.userInfo == null) {
+            return
+        }
         val loginParts = uri.userInfo.split(":")
         val appName = loginParts[0]
 
