@@ -3,6 +3,8 @@
 # Encore IntelliJ Plugin Changelog
 
 ## [Unreleased]
+
+## [0.1.1]
 ### Bugs
 - Fixes #8 - Null pointer exception under some conditions with the sqldb detector logic.
 - Fixes a null pointer exception when there is no `defaultModule` for a project.
