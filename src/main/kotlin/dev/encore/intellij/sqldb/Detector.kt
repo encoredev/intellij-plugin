@@ -6,6 +6,7 @@ import com.intellij.database.dataSource.localDataSource
 import com.intellij.database.model.DasDataSource
 import com.intellij.database.model.ObjectKind
 import com.intellij.database.model.ObjectName
+import com.intellij.database.util.SmartPredicate
 import com.intellij.database.util.TreePattern
 import com.intellij.database.util.TreePatternNode
 import com.intellij.database.util.TreePatternNode.NegativeNaming
@@ -98,28 +99,29 @@ class Detector : DataSourceDetector() {
             val treePattern = TreePattern(
                 TreePatternNode.Group(
                     ObjectKind.DATABASE,
-                    null, // All positive names allowed
-                    TreePatternNode(
-                        NegativeNaming(
-                            ObjectName("postgres", false), // Don't show the default postgres database
+                    arrayOf(
+                        TreePatternNode(
+                            NegativeNaming(
+                                SmartPredicate.all(),
+                                ObjectName("postgres", false), // Don't show the default postgres database
 
-                            // IntelliJ bug where on first load it shows these two and then complains  that they
-                            // don't exist
-                            ObjectName("template0", false),
-                            ObjectName("template1", false),
-                        ),
-                        arrayOf(
-                            TreePatternNode.Group(
-                                ObjectKind.SCHEMA,
-                                arrayOf(
-                                    // We only want to pickup public schema's
-                                    TreePatternNode(
-                                        PositiveNaming(ObjectName("public", false)),
-                                        arrayOf(),
-                                    )
-                                ),
-                                null
-                            )
+                                // IntelliJ bug where on first load it shows these two and then complains  that they
+                                // don't exist
+                                ObjectName("template0", false),
+                                ObjectName("template1", false),
+                            ),
+                            arrayOf(
+                                TreePatternNode.Group(
+                                    ObjectKind.SCHEMA,
+                                    arrayOf(
+                                        // We only want to pickup public schema's
+                                        TreePatternNode(
+                                            PositiveNaming(ObjectName("public", false)),
+                                            arrayOf(),
+                                        )
+                                    ),
+                                )
+                            ),
                         ),
                     ),
                 )

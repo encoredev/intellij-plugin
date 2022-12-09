@@ -3,6 +3,8 @@
 # Encore IntelliJ Plugin Changelog
 
 ## [Unreleased]
+### Added
+- Support for GoLand 2022.3
 
 ## [0.1.1]
 ### Bugs
