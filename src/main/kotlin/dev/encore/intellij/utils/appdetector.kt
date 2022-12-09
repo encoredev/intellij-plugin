@@ -1,6 +1,5 @@
 package dev.encore.intellij.utils
 
-import com.intellij.database.util.containsElements
 import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.guessProjectDir
@@ -40,8 +39,8 @@ fun isInEncoreApp(project: Project): Boolean {
     }
 
     // Then check the projects modules
-    return ModuleManager.getInstance(project).modules.containsElements { module ->
-        module.rootManager.contentRoots.containsElements { folder ->
+    return ModuleManager.getInstance(project).modules.any { module ->
+        module.rootManager.contentRoots.any { folder ->
             folder.findChild(EncoreAppFile)?.exists() == true
         }
     }
