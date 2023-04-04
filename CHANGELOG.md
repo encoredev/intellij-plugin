@@ -3,6 +3,8 @@
 # Encore IntelliJ Plugin Changelog
 
 ## Unreleased
+- Support for GoLand 2023.1
+- Add support for annotating Encore API directives, with some basic validation
 
 ## 0.1.2 - 2022-12-09
 

@@ -41,6 +41,11 @@
 
         <applicationService serviceImplementation="dev.encore.intellij.settings.SettingsState" />
 
+        <annotator
+            language="go"
+            implementationClass="dev.encore.intellij.annotators.ApiDecls"
+            />
+
         <applicationConfigurable
                 parentId="tools"
                 instance="dev.encore.intellij.settings.Settings"
