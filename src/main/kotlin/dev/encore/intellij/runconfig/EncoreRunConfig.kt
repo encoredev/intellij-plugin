@@ -3,6 +3,7 @@ package dev.encore.intellij.runconfig
 import com.goide.execution.GoBuildingRunConfiguration
 import com.goide.execution.GoRunConfigurationBase
 import com.goide.execution.GoRunningState
+import com.goide.execution.application.GoApplicationConfiguration
 import com.goide.execution.extension.GoRunConfigurationExtension
 import com.goide.execution.testing.GoTestRunConfiguration
 import com.intellij.execution.configurations.RunnerSettings
@@ -13,8 +14,8 @@ import dev.encore.intellij.utils.isInEncoreApp
 
 class EncoreRunConfig : GoRunConfigurationExtension() {
     override fun isApplicableFor(configuration: GoRunConfigurationBase<*>): Boolean {
-        if (configuration is GoTestRunConfiguration) {
-            return isInEncoreApp(configuration.project)
+        if (configuration is GoTestRunConfiguration) { //  || isRunCommand(configuration)) {
+            return isInEncoreApp(configuration.getProject())
         }
         return false
     }
@@ -23,8 +24,8 @@ class EncoreRunConfig : GoRunConfigurationExtension() {
         applicableConfiguration: GoRunConfigurationBase<*>,
         runnerSettings: RunnerSettings?
     ): Boolean {
-        if (applicableConfiguration is GoTestRunConfiguration) {
-            return isInEncoreApp(applicableConfiguration.project)
+        if (applicableConfiguration is GoTestRunConfiguration || isRunCommand(applicableConfiguration)) {
+            return isInEncoreApp(applicableConfiguration.getProject())
         }
         return false
     }
@@ -39,20 +40,32 @@ class EncoreRunConfig : GoRunConfigurationExtension() {
     ) {
         var useEncoreBinary = false
         if (configuration is GoTestRunConfiguration) {
-            if (configuration.kind == GoBuildingRunConfiguration.Kind.DIRECTORY) {
+            useEncoreBinary = if (configuration.kind == GoBuildingRunConfiguration.Kind.DIRECTORY) {
                 // Directory style tests just run `go test -json [dir]`
                 // so we always want to swap to the Encore binary for these
-                useEncoreBinary = true
+                true
             } else {
                 // Otherwise we only want to use the Encore binary for build commands, as
                 // GoLand first builds the binary (when we want to use Encore)
                 // Then uses `go tools test2json [builtbinary]` - where we want to use the standard binary
-                useEncoreBinary = commandLineType == GoRunningState.CommandLineType.BUILD
+                commandLineType == GoRunningState.CommandLineType.BUILD
             }
         }
+
+//        if (isRunCommand(configuration)) {
+//            useEncoreBinary = true
+//        }
+
         if (useEncoreBinary) {
             cmdLine.exePath = TargetValue.fixed(settingsState().encoreBinary)
         }
         super.patchCommandLine(configuration, runnerSettings, cmdLine, runnerId, state, commandLineType)
+    }
+
+    private fun isRunCommand(configuration: GoRunConfigurationBase<*>): Boolean {
+        if (configuration is GoApplicationConfiguration) {
+            return configuration.kind == GoBuildingRunConfiguration.Kind.PACKAGE && configuration.`package` == "encore.app"
+        }
+        return true
     }
 }
